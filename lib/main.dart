@@ -16,15 +16,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 1. 부모 클래스 생성 - SF(stateful)로 만들기
-// 2. 부모 클래스가
-// 3. HomePage를 Stateless로 변경
+// 1. Father 클래스 생성 - SF 만들기
+// 2. Father 클래스가
 
 class HomePage extends StatefulWidget {
-  int num = 1;
-
-  void add() {}
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -39,7 +34,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("나그려짐");
+    print("HomePage");
     return Container(
       color: Colors.yellow,
       child: Padding(
@@ -47,39 +42,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Header(),
-            Top(num: num),
-            Bottom(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Bottom extends StatelessWidget {
-  const Bottom({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    print("나는 Bottom");
-    return Expanded(
-      child: Container(
-        color: Colors.blue,
-        child: Align(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () {},
-            child: Text(
-              "증가",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 100,
-              ),
+            Expanded(
+              child: Top(num: num),
             ),
-          ),
+            Expanded(
+              child: Bottom(add: add),
+            ),
+          ],
         ),
       ),
     );
@@ -93,10 +62,41 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("나는 Header");
+    print("Header");
     return Container(
-      color: Colors.purple,
+      color: Colors.green,
       height: 200,
+    );
+  }
+}
+
+class Bottom extends StatelessWidget {
+  // 행위
+  Function add;
+
+  Bottom({required this.add});
+
+  @override
+  Widget build(BuildContext context) {
+    print("Bottom");
+    return Container(
+      color: Colors.blue,
+      child: Align(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          onPressed: () {
+            add();
+          },
+          child: Text(
+            "증가",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 100,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -111,19 +111,17 @@ class Top extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("나는 Top");
-    return Expanded(
-      child: Container(
-        color: Colors.red,
-        child: Align(
-          child: Text(
-            "${num}",
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 100,
-                decoration: TextDecoration.none),
-          ),
+    print("Top");
+    return Container(
+      color: Colors.red,
+      child: Align(
+        child: Text(
+          "${num}",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 100,
+              decoration: TextDecoration.none),
         ),
       ),
     );
