@@ -16,22 +16,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 1. Father 클래스 생성 - SF 만들기
-// 2. Father 클래스가
+// 1. 부모 클래스 생성 - SF(stateful)로 만들기
+// 2. 부모 클래스가 Top - Bottom을 가지기
+// 3. HomePage를 Stateless로 변경
 
-class HomePage extends StatefulWidget {
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int num = 1;
-
-  void add() {
-    num++;
-    setState(() {});
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("HomePage");
@@ -42,14 +31,38 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Header(),
-            Expanded(
-              child: Top(num: num),
-            ),
-            Expanded(
-              child: Bottom(add: add),
-            ),
+            Parent(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Parent extends StatefulWidget {
+  const Parent({super.key});
+
+  @override
+  State<Parent> createState() => _ParentState();
+}
+
+class _ParentState extends State<Parent> {
+  int num = 1;
+
+  void add() {
+    num++;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("----Top, Bottom의 공통부모----번호${num}-------");
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(child: Top(num: num)),
+          Expanded(child: Bottom(add: add)),
+        ],
       ),
     );
   }
