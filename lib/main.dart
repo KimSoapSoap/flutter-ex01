@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,13 +16,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// 1. 부모 클래스 생성 - SF(stateful)로 만들기
+// 2. 부모 클래스가
+// 3. HomePage를 Stateless로 변경
+
 class HomePage extends StatefulWidget {
+  int num = 1;
+
+  void add() {}
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int num = 1;
+
+  void add() {
+    num++;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,45 +46,84 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Expanded(
-              child: Container(
-                color: Colors.red,
-                child: Align(
-                  child: Text(
-                    "${num}",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 100,
-                        decoration: TextDecoration.none),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.blue,
-                child: Align(
-                  child: ElevatedButton(
-                    style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    onPressed: () {
-                      num++;
-                      setState(() {});
-                    },
-                    child: Text(
-                      "증가",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 100,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            Header(),
+            Top(num: num),
+            Bottom(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Bottom extends StatelessWidget {
+  const Bottom({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print("나는 Bottom");
+    return Expanded(
+      child: Container(
+        color: Colors.blue,
+        child: Align(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {},
+            child: Text(
+              "증가",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 100,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  const Header({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print("나는 Header");
+    return Container(
+      color: Colors.purple,
+      height: 200,
+    );
+  }
+}
+
+class Top extends StatelessWidget {
+  const Top({
+    super.key,
+    required this.num,
+  });
+
+  final int num;
+
+  @override
+  Widget build(BuildContext context) {
+    print("나는 Top");
+    return Expanded(
+      child: Container(
+        color: Colors.red,
+        child: Align(
+          child: Text(
+            "${num}",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 100,
+                decoration: TextDecoration.none),
+          ),
         ),
       ),
     );
