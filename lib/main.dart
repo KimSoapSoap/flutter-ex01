@@ -92,6 +92,10 @@ class Bottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Bottom");
+    return buildContainer();
+  }
+
+  Container buildContainer() {
     return Container(
       color: Colors.blue,
       child: Align(
